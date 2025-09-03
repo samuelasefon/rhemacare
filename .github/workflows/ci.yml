@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-
+      - name: Install dependencies
+        run: npm ci
+      - name: Build Tailwind CSS
+        run: npm run build:css
+      - name: HTML lint
+        run: npx htmlhint "./*.html"
+      - name: Start simple server
+        run: npx http-server -p 8080 &
+      - name: Accessibility checks (pa11y) - multiple targets
+        run: |
+          sleep 2
+          npx pa11y http://127.0.0.1:8080/
+          npx pa11y http://127.0.0.1:8080/about.html
+          npx pa11y http://127.0.0.1:8080/services.html
+          npx pa11y http://127.0.0.1:8080/contact.html
+      - name: Axe programmatic scan
+        run: |
+          sleep 1
+          node tools/axe-scan.js

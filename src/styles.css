@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* project customizations */
+:root {
+  --brand: #059669;
+}
+
+/* keep a small accent for focus visible in low contrast */
+.focus-ring:focus {
+  outline: 2px solid rgba(5, 150, 105, 0.2);
+  outline-offset: 2px;
+}
+
+/* small utility for subtle card borders */
+.card {
+  @apply bg-white rounded-lg shadow p-6 border border-slate-100;
+}
+
+/* improved typography scale for headings */
+h1 {
+  @apply leading-tight;
+}
+h2,
+h3 {
+  @apply leading-snug;
+}

@@ -46,7 +46,7 @@ export SMTP_HOST=smtp.example.com
 export SMTP_PORT=587
 export SMTP_USER=you@example.com
 export SMTP_PASS=yourpassword
-export CONTACT_EMAIL=info@rhemahealthcare.uk
+export CONTACT_EMAIL=info@rhemacares.uk
 ```
 
 3. Build Tailwind CSS (optional during development if you prefer local CSS instead of CDN):
@@ -83,7 +83,11 @@ Accessibility and CI
   3.  Run the axe scan: `npm run a11y:axe`
 
 - CI now contains a Node matrix and caches npm; it runs HTMLHint, multiple pa11y checks and the axe script.
+
 # rhemacare
+
 # rhemacare
+
 # rhemacare
+
 # rhemacare
